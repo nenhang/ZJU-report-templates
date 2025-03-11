@@ -250,7 +250,7 @@ h6.md-focus:before {
 }
 
 #write {
-  counter-reset: h2 h3 h4 h5 h6;
+  counter-reset: heading-h2 heading-h3 heading-h4 heading-h5 heading-h6;
 }
 #write h1,
 #write h2,
@@ -293,61 +293,149 @@ h6.md-focus:before {
   line-height: var(--h5-font-size);
 }
 #write h1 {
-  counter-reset: h2 h3 h4 h5 h6;
+  counter-set: heading-h2 0 heading-h3 0 heading-h4 0 heading-h5 0 heading-h6 0;
 }
 #write h2 {
-  counter-reset: h3 h4 h5 h6;
+  counter-set: heading-h3 0 heading-h4 0 heading-h5 0 heading-h6 0;
 }
 #write h3 {
-  counter-reset: h4 h5 h6;
+  counter-set: heading-h4 0 heading-h5 0 heading-h6 0;
 }
 #write h4 {
-  counter-reset: h5 h6;
+  counter-set: heading-h5 0 heading-h6 0;
 }
 #write h5 {
-  counter-reset: h6;
+  counter-set: heading-h6 0;
 }
 #write h2:before, h2.md-focus.md-heading:before {
-  content: counter(h2);
-  counter-increment: h2;
+  content: counter(heading-h2);
+  counter-increment: heading-h2;
   margin-right: 1.2em;
 }
 
 #write h3:before, h3.md-focus.md-heading:before {
-  content: counter(h2) "." counter(h3);
-  counter-increment: h3;
+  content: counter(heading-h2) "." counter(heading-h3);
+  counter-increment: heading-h3;
   margin-right: 1.2em;
 }
 
 #write h4:before, h4.md-focus.md-heading:before {
-  content: counter(h2) "." counter(h3) "." counter(h4);
-  counter-increment: h4;
+  content: counter(heading-h2) "." counter(heading-h3) "." counter(heading-h4);
+  counter-increment: heading-h4;
   margin-right: 1.2em;
 }
 
 #write h5:before, h5.md-focus.md-heading:before {
-  content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5);
-  counter-increment: h5;
+  content: counter(heading-h2) "." counter(heading-h3) "." counter(heading-h4) "." counter(heading-h5);
+  counter-increment: heading-h5;
   margin-right: 1.2em;
 }
 
 #write h6:before, h6.md-focus.md-heading:before {
-  content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6);
-  counter-increment: h6;
+  content: counter(heading-h2) "." counter(heading-h3) "." counter(heading-h4) "." counter(heading-h5) "." counter(heading-h6);
+  counter-increment: heading-h6;
   margin-right: 1.2em;
 }
 
-/* 参考文献（脚注）块 */
-.footnotes {
+/* 参考文献（脚注）块，在 Typora 中的样式 */
+.md-def-footnote {
+  display: flex;
+  position: relative;
   font-size: 0.95em;
+  opacity: 1;
+  margin: 0;
+}
+.md-def-footnote:not(:first-child), .md-def-footnote + *:not(.md-def-footnote) {
+  margin-top: 1em;
+}
+.md-def-footnote + .md-def-footnote {
+  margin-top: 0.5em;
+}
+.md-def-footnote .md-def-name {
+  font-weight: inherit;
+  padding: 0;
+  flex-shrink: 0;
+  width: 3em;
+  margin-inline-start: -1ch;
+  white-space: nowrap;
+  text-align: left;
+}
+.md-def-footnote .md-def-name:before {
+  content: "［";
+  position: static;
+  color: inherit;
+}
+.md-def-footnote .md-def-name:after {
+  content: "］";
+  position: static;
+  color: inherit;
+}
+.md-def-footnote .md-reverse-footnote-area {
+  display: none;
+}
+.md-def-footnote:hover .md-reverse-footnote-area {
+  position: absolute;
+  right: -6px;
+  display: inline;
 }
 
-.footnotes-area .footnote-line {
-  color: var(--text-color);
+/* 参考文献（脚注）块，在导出 HTML 或 PDF 时的样式（导出后的 HTML tag 和 Typora 中的 HTML tag 不一致） */
+.footnotes-area {
+  padding-inline-start: 2.5em;
 }
 .footnotes-area hr {
-  border: 0;
-  color: rgba(0, 0, 0, 0);
+  display: none;
+}
+.footnotes-area .footnote-line {
+  color: var(--text-color);
+  font-size: 0.95em;
+  margin-top: 0.5em;
+}
+.footnotes-area .footnote-line *:not(.md-fn-count) {
+  display: inline-block;
+  vertical-align: top;
+}
+.footnotes-area .footnote-line span.md-fn-count {
+  font-weight: inherit;
+  padding: 0;
+  margin-inline-start: -3em;
+  white-space: nowrap;
+  display: inline-block;
+  width: 2.5em;
+}
+.footnotes-area .footnote-line span.md-fn-count:before {
+  content: "［";
+  position: static;
+  color: inherit;
+}
+.footnotes-area .footnote-line span.md-fn-count:after {
+  content: "］";
+  position: static;
+  color: inherit;
+}
+.footnotes-area .footnote-line a.reversefootnote {
+  display: none;
+}
+
+/* 参考文献（脚注）上标 */
+sup.md-footnote {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+}
+sup.md-footnote a {
+  color: inherit !important;
+}
+sup.md-footnote:not(.md-expand) {
+  margin-inline: -0.44em;
+}
+sup.md-footnote:not(.md-expand):before {
+  content: "［";
+}
+sup.md-footnote:not(.md-expand):after {
+  content: "］";
 }
 
 /* 无序列表 */
@@ -528,7 +616,7 @@ li code {
 .md-toc-content {
   margin-left: 2em;
   /* 修复缺失上级标题时无法递增 */
-  counter-reset: toc-h2 toc-h3 toc-h4;
+  counter-reset: toc-h2 toc-h3 toc-h4 toc-h5 toc-h6;
   break-after: page;
 }
 
@@ -558,19 +646,19 @@ li code {
 /* 目录标题前 */
 .md-toc-content .md-toc-h1 {
   display: var(--toc-show-title);
-  counter-reset: toc-h2 toc-h3 toc-h4 toc-h5 toc-h6;
+  counter-set: toc-h2 0 toc-h3 0 toc-h4 0 toc-h5 0 toc-h6 0;
 }
 .md-toc-content .md-toc-h2 {
-  counter-reset: toc-h3 toc-h4 toc-h5 toc-h6;
+  counter-set: toc-h3 0 toc-h4 0 toc-h5 0 toc-h6 0;
 }
 .md-toc-content .md-toc-h3 {
-  counter-reset: toc-h4 toc-h5 toc-h6;
+  counter-set: toc-h4 0 toc-h5 0 toc-h6 0;
 }
 .md-toc-content .md-toc-h4 {
-  counter-reset: toc-h5 toc-h6;
+  counter-set: toc-h5 0 toc-h6 0;
 }
 .md-toc-content .md-toc-h5 {
-  counter-reset: toc-h6;
+  counter-set: toc-h6 0;
 }
 .md-toc-content .md-toc-h2:before {
   counter-increment: toc-h2;
